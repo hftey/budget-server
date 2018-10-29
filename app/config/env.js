@@ -1,5 +1,5 @@
 const env = {
-  database: 'ngx-budget',
+  database: 'budget',
   username: 'root',
   password: 'qwe098poi',
   host: 'localhost',
