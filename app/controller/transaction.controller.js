@@ -23,9 +23,19 @@ exports.list = (req, res) => {
 exports.add = (req, res) => {
     let transaction = req.body;
     Transaction.create(transaction).then(result => {
-        // Send created customer to client
         res.json(result);
     });
+
+    if (transaction.type == 'transferout' && transaction.addCategoryTransferTo != ''){
+        transaction.type = 'transferin';
+        transaction.category_id = transaction.addCategoryTransferTo;
+        Transaction.create(transaction).then(result => {
+            res.json(result);
+        });
+
+    }
+
+
 };
 
 exports.update = (req, res) => {
