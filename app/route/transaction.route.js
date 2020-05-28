@@ -8,6 +8,8 @@ module.exports = function(app) {
     app.delete('/api/transaction/:transactionId', transaction.delete);
     app.get('/api/transaction-detail/:transactionId', transaction.detail);
     app.put('/api/transaction', transaction.update);
+    app.get('/api/transaction-list/:userId/:filterPayee', transaction.filter);
+    app.get('/api/transaction-list-description/:userId/:filterDescription', transaction.filterDescription);
 
 
 }

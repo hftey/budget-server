@@ -1,4 +1,7 @@
 const db = require('../config/db.config.js');
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
+
 const Category = db.category;
 const Transaction = db.transaction;
 
@@ -67,6 +70,49 @@ exports.detail = (req, res) => {
         where:{
             id: id
         }
+    }).then(transaction => {
+        // Send all customers to Client
+        console.log('budget month return', transaction);
+        res.json(transaction);
+    });
+};
+
+
+exports.filter = (req, res) => {
+    filterPayee = req.params.filterPayee;
+    user_id =  req.params.userId,
+    Transaction.findAll({
+        where:{
+            user_id: user_id,
+            payee: {
+                [Op.like]: '%'+filterPayee+'%' 
+            }
+        },
+        offset: 0,
+        limit: 10,
+        group: ['payee']
+        
+    }).then(transaction => {
+        // Send all customers to Client
+        console.log('budget month return', transaction);
+        res.json(transaction);
+    });
+};
+
+exports.filterDescription = (req, res) => {
+    filterDescription = req.params.filterDescription;
+    user_id =  req.params.userId,
+    Transaction.findAll({
+        where:{
+            user_id: user_id,
+            desc: {
+                [Op.like]: '%'+filterDescription+'%' 
+            }
+        },
+        offset: 0,
+        limit: 10,
+        group: ['desc']
+        
     }).then(transaction => {
         // Send all customers to Client
         console.log('budget month return', transaction);
